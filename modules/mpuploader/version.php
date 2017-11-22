@@ -24,7 +24,6 @@ $module_version = array(
 	'uploads_dir' => array(
 		$module_upload,
 		$module_upload . '/files',
-		$module_upload . '/thumbs',
 		$module_upload . '/tmp'
 	),
 	'note' => ''
