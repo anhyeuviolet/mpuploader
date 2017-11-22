@@ -61,18 +61,15 @@ if( ACTION_METHOD == 'deleterows' )
 			{
 				$db->query( 'UPDATE ' . TABLE_PHOTO_NAME . '_album SET num_photo = (SELECT COUNT(*) FROM ' . TABLE_PHOTO_NAME . '_rows WHERE album_id = ' . $data['album_id'] . ') WHERE album_id = ' . $data['album_id'] );
 				@nv_deletefile( NV_ROOTDIR . '/' . NV_UPLOADS_DIR . '/' . $module_upload . '/files/' . $data['file'] );
-				// @nv_deletefile( NV_ROOTDIR . '/' . NV_UPLOADS_DIR . '/' . $module_upload . '/tmp/' . $data['file'] );
-				$nv_Cache->delMod( $module_name );
+
+                $nv_Cache->delMod( $module_name );
 				$info['success'] = $lang_module['photo_success_delete'];
 			}
 		}
 	}
 	elseif( empty( $row_id ) AND $token_image == md5( $global_config['sitekey'] . session_id( ) . $image_url ) AND $token_thumb == md5( $global_config['sitekey'] . session_id( ) . $thumb ) )
 	{
-		// @nv_deletefile( NV_ROOTDIR . $thumb );
-        
-        //
-        $_temp_image_url = str_replace( NV_BASE_SITEURL,'/',$image_url);
+        $_temp_image_url = str_replace( NV_BASE_SITEURL,'/',$image_url );
 		@nv_deletefile( NV_ROOTDIR . $_temp_image_url );
         
 		$info['success'] = $lang_module['photo_success_delete'];
@@ -125,8 +122,8 @@ if( ACTION_METHOD == 'delete' )
 					}
 				}
 
-				@nv_deletefile( NV_ROOTDIR . '/' . NV_UPLOADS_DIR . '/' . $module_upload . '/files/' . $album['folder'] );
-				@rmdir( NV_ROOTDIR . '/' . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $album['folder'] );
+				@nv_deletefile( $album['folder'] );
+				@rmdir( $album['folder'] );
 				$nv_Request->unset_request( $module_data . '_success', 'session' );
 				nv_insert_logs( NV_LANG_DATA, $module_name, 'log_del_album', $album['album_id'], $admin_info['userid'] );
 				$nv_Cache->delMod( $module_name );
@@ -166,7 +163,7 @@ if( ACTION_METHOD == 'add' || ACTION_METHOD == 'edit' )
 	$array_structure_image['Ym_d'] = $module_upload . '/files/' . date( 'Y_m/d' );
 	$array_structure_image['Y_m_d'] = $module_upload . '/files/' . date( 'Y/m/d' );
 
-	$structure_upload = isset( $module_config[$module_name]['structure_upload'] ) ? $module_config[$module_name]['structure_upload'] : 'Ym';
+	$structure_upload = '';
 	$currentpath = isset( $array_structure_image[$structure_upload] ) ? $array_structure_image[$structure_upload] : '';
 
 	if( file_exists( NV_UPLOADS_REAL_DIR . '/' . $currentpath ) )
@@ -204,59 +201,12 @@ if( ACTION_METHOD == 'add' || ACTION_METHOD == 'edit' )
 	$currentpath = str_replace( NV_ROOTDIR . '/', '', $upload_real_dir_page );
 	$imagepath = str_replace( NV_UPLOADS_REAL_DIR . '/' . $module_upload . '/files/', '', $upload_real_dir_page );
 
-	//Folder thumb
-	$array_structure_thumb = array( );
-	$array_structure_thumb[''] = $module_upload . '/thumbs';
-	$array_structure_thumb['Y'] = $module_upload . '/thumbs/' . date( 'Y' );
-	$array_structure_thumb['Ym'] = $module_upload . '/thumbs/' . date( 'Y_m' );
-	$array_structure_thumb['Y_m'] = $module_upload . '/thumbs/' . date( 'Y/m' );
-	$array_structure_thumb['Ym_d'] = $module_upload . '/thumbs/' . date( 'Y_m/d' );
-	$array_structure_thumb['Y_m_d'] = $module_upload . '/thumbs/' . date( 'Y/m/d' );
-
-	$structure_upload = isset( $module_config[$module_name]['structure_upload'] ) ? $module_config[$module_name]['structure_upload'] : 'Ym';
-	$currentpaththumb = isset( $array_structure_thumb[$structure_upload] ) ? $array_structure_thumb[$structure_upload] : '';
-
-	if( file_exists( NV_UPLOADS_REAL_DIR . '/' . $currentpaththumb ) )
-	{
-		$upload_real_dir_page = NV_UPLOADS_REAL_DIR . '/' . $currentpaththumb;
-	}
-	else
-	{
-		$upload_real_dir_page = NV_UPLOADS_REAL_DIR . '/' . $module_upload . '/files';
-		$e = explode( '/', $currentpaththumb );
-		if( !empty( $e ) )
-		{
-			$cp = '';
-			foreach( $e as $p )
-			{
-				if( !empty( $p ) and !is_dir( NV_UPLOADS_REAL_DIR . '/' . $cp . $p ) )
-				{
-					$mk = nv_mkdir( NV_UPLOADS_REAL_DIR . '/' . $cp, $p );
-					if( $mk[0] > 0 )
-					{
-						$upload_real_dir_page = $mk[2];
-						$db->query( "INSERT IGNORE INTO " . NV_UPLOAD_GLOBALTABLE . "_dir (dirname, time) VALUES ('" . NV_UPLOADS_DIR . "/" . $cp . $p . "', 0)" );
-					}
-				}
-				elseif( !empty( $p ) )
-				{
-					$upload_real_dir_page = NV_UPLOADS_REAL_DIR . '/' . $cp . $p;
-				}
-				$cp .= $p . '/';
-			}
-		}
-		$upload_real_dir_page = str_replace( '\\', '/', $upload_real_dir_page );
-	}
-
-	$currentpaththumb = str_replace( NV_ROOTDIR . '/', '', $upload_real_dir_page );
-
 	$selectthemes = (!empty( $site_mods[$module_name]['theme'] )) ? $site_mods[$module_name]['theme'] : $global_config['site_theme'];
 	$layout_array = nv_scandir( NV_ROOTDIR . '/themes/' . $selectthemes . '/layout', $global_config['check_op_layout'] );
 
 	$cat_form_exit = array( );
 	$_form_exit = scandir( NV_ROOTDIR . '/themes/' . $global_config['module_theme'] . '/modules/' . $module_file );
-	foreach( $_form_exit as $_form )
-	{
+	foreach ( $_form_exit as $_form ) {
 		if( preg_match( '/^cat\_form\_([a-zA-Z0-9\-\_]+)\.tpl$/', $_form, $m ) )
 		{
 			$cat_form_exit[] = $m[1];
@@ -395,7 +345,7 @@ if( ACTION_METHOD == 'add' || ACTION_METHOD == 'edit' )
 		$array_checkPath['Ym_d'] = date( 'Y_m/d' );
 		$array_checkPath['Y_m_d'] = date( 'Y/m/d' );
 
-		$folderPath = isset( $module_config[$module_name]['structure_upload'] ) ? $module_config[$module_name]['structure_upload'] : 'Ym';
+		$folderPath = isset( $module_config[$module_name]['structure_upload'] ) ? $module_config[$module_name]['structure_upload'] : 'Y_m';
 		$check_path = isset( $array_checkPath[$folderPath] ) ? $array_checkPath[$folderPath] : '';
 
 		$_nb = $db->query( 'SELECT COUNT(*) FROM ' . TABLE_PHOTO_NAME . '_album WHERE album_id != ' . $data['album_id'] . ' AND folder=' . $db->quote( $check_path . '/' . $data['folder'] ) )->fetchColumn( );
@@ -516,58 +466,35 @@ if( ACTION_METHOD == 'add' || ACTION_METHOD == 'edit' )
 
 									$photo['file'] = substr( $newFilePath, strlen( NV_UPLOADS_REAL_DIR . '/' . $module_upload . '/files/' ) );
 
-									// Copy file thumb
-									//$thum_folder  = floor( $data['album_id'] / 1000 );
-									$thumbName = $fileName = substr( $photo['thumb'], strlen( NV_BASE_SITEURL . NV_TEMP_DIR . '/' ) );
-									$fileName2 = $fileName;
-									$i = 1;
-									while( file_exists( NV_ROOTDIR . '/' . $currentpaththumb . '/' . $fileName2 ) )
-									{
-										$fileName2 = preg_replace( '/(.*)(\.[a-zA-Z0-9]+)$/', '\1_' . $i . '\2', $fileName );
-										++$i;
-									}
-									$fileName = $fileName2;
-									$filePath = NV_ROOTDIR . '/' . NV_UPLOADS_DIR . '/' . $module_file . '/tmp/' . $thumbName;
-									$newFilePath = NV_ROOTDIR . '/' . $currentpaththumb . '/' . $fileName;
+                                    // Xoa anh tam
+                                    @nv_deletefile( $filePath );
+                                    $photo['thumb'] = substr( $newFilePath, strlen( NV_UPLOADS_REAL_DIR . '/' . $module_upload . '/thumb/' ) );
 
-									// $rename = nv_copyfile( $filePath, $newFilePath );
-									if( !$rename )
-									{
-										$error .= $lang_module['album_error_copy_photo'] . basename( $filePath );
-										unset( $data['albums'][$key] );
-									}
-									else
-									{
-										// Xoa anh tam
-										@nv_deletefile( $filePath );
-										$photo['thumb'] = substr( $newFilePath, strlen( NV_UPLOADS_REAL_DIR . '/' . $module_upload . '/thumb/' ) );
+                                    $sth = $db->prepare( 'INSERT INTO ' . TABLE_PHOTO_NAME . '_rows SET 
+                                        album_id = ' . (int)$data['album_id'] . ', 
+                                        size = ' . (int)$photo['size'] . ', 
+                                        width = ' . (int)$photo['width'] . ', 
+                                        height = ' . (int)$photo['height'] . ', 
+                                        status=' . intval( 1 ) . ', 
+                                        date_added=' . intval( NV_CURRENTTIME ) . ',  
+                                        date_modified=' . intval( NV_CURRENTTIME ) . ', 
+                                        name = :name,
+                                        description = :description,
+                                        file = :file,
+                                        thumb = :thumb,
+                                        ext = :ext,
+                                        mime = :mime' );
 
-										$sth = $db->prepare( 'INSERT INTO ' . TABLE_PHOTO_NAME . '_rows SET 
-											album_id = ' . (int)$data['album_id'] . ', 
-											size = ' . (int)$photo['size'] . ', 
-											width = ' . (int)$photo['width'] . ', 
-											height = ' . (int)$photo['height'] . ', 
-											status=' . intval( 1 ) . ', 
-											date_added=' . intval( NV_CURRENTTIME ) . ',  
-											date_modified=' . intval( NV_CURRENTTIME ) . ', 
-											name = :name,
-											description = :description,
-											file = :file,
-											thumb = :thumb,
-											ext = :ext,
-											mime = :mime' );
-
-										$sth->bindParam( ':name', $photo['name'], PDO::PARAM_STR );
-										$sth->bindParam( ':description', $photo['description'], PDO::PARAM_STR );
-										$sth->bindParam( ':file', $photo['file'], PDO::PARAM_STR );
-										$sth->bindParam( ':thumb', $photo['thumb'], PDO::PARAM_STR );
-										$sth->bindParam( ':ext', $photo['ext'], PDO::PARAM_STR );
-										$sth->bindParam( ':mime', $photo['mime'], PDO::PARAM_STR );
-										$sth->execute( );
-										//$row_id = $db->lastInsertId();
-										$sth->closeCursor( );
-										++$count;
-									}
+                                    $sth->bindParam( ':name', $photo['name'], PDO::PARAM_STR );
+                                    $sth->bindParam( ':description', $photo['description'], PDO::PARAM_STR );
+                                    $sth->bindParam( ':file', $photo['file'], PDO::PARAM_STR );
+                                    $sth->bindParam( ':thumb', $photo['thumb'], PDO::PARAM_STR );
+                                    $sth->bindParam( ':ext', $photo['ext'], PDO::PARAM_STR );
+                                    $sth->bindParam( ':mime', $photo['mime'], PDO::PARAM_STR );
+                                    $sth->execute( );
+                                    //$row_id = $db->lastInsertId();
+                                    $sth->closeCursor( );
+                                    ++$count;
 								}
 								else
 								{
@@ -691,57 +618,34 @@ if( ACTION_METHOD == 'add' || ACTION_METHOD == 'edit' )
 
 											$photo['file'] = substr( $newFilePath, strlen( NV_UPLOADS_REAL_DIR . '/' . $module_upload . '/files/' ) );
 
-											// Copy file thumb
-											//$thum_folder  = floor( $data['album_id'] / 1000 );
-											$thumbName = $fileName = substr( $photo['thumb'], strlen( NV_BASE_SITEURL . NV_TEMP_DIR . '/' ) );
-											$fileName2 = $fileName;
-											$i = 1;
-											while( file_exists( NV_ROOTDIR . '/' . $currentpaththumb . '/' . $fileName2 ) )
-											{
-												$fileName2 = preg_replace( '/(.*)(\.[a-zA-Z0-9]+)$/', '\1_' . $i . '\2', $fileName );
-												++$i;
-											}
-											$fileName = $fileName2;
-											$filePath = NV_ROOTDIR . '/' . NV_UPLOADS_DIR . '/' . $module_file . '/tmp/' . $thumbName;
-											$newFilePath = NV_ROOTDIR . '/' . $currentpaththumb . '/' . $fileName;
+                                            // Xoa anh tam
+                                            @nv_deletefile( $filePath );
+                                            $photo['thumb'] = substr( $newFilePath, strlen( NV_UPLOADS_REAL_DIR . '/' . $module_upload . '/thumb/' ) );
 
-											// $rename = nv_copyfile( $filePath, $newFilePath );
-											if( !$rename )
-											{
-												$error .= $lang_module['album_error_copy_photo'] . basename( $filePath );
-												unset( $data['albums'][$key] );
-											}
-											else
-											{
-												// Xoa anh tam
-												@nv_deletefile( $filePath );
-												$photo['thumb'] = substr( $newFilePath, strlen( NV_UPLOADS_REAL_DIR . '/' . $module_upload . '/thumb/' ) );
+                                            $sth = $db->prepare( 'INSERT IGNORE INTO ' . TABLE_PHOTO_NAME . '_rows SET 
+                                                album_id = ' . (int)$data['album_id'] . ', 
+                                                size = ' . (int)$photo['size'] . ', 
+                                                width = ' . (int)$photo['width'] . ', 
+                                                height = ' . (int)$photo['height'] . ', 
+                                                status=' . intval( 1 ) . ', 
+                                                date_added=' . intval( NV_CURRENTTIME ) . ',  
+                                                date_modified=' . intval( NV_CURRENTTIME ) . ', 
+                                                name = :name,
+                                                description = :description,
+                                                file = :file,
+                                                thumb = :thumb,
+                                                ext = :ext,
+                                                mime = :mime' );
 
-												$sth = $db->prepare( 'INSERT IGNORE INTO ' . TABLE_PHOTO_NAME . '_rows SET 
-													album_id = ' . (int)$data['album_id'] . ', 
-													size = ' . (int)$photo['size'] . ', 
-													width = ' . (int)$photo['width'] . ', 
-													height = ' . (int)$photo['height'] . ', 
-													status=' . intval( 1 ) . ', 
-													date_added=' . intval( NV_CURRENTTIME ) . ',  
-													date_modified=' . intval( NV_CURRENTTIME ) . ', 
-													name = :name,
-													description = :description,
-													file = :file,
-													thumb = :thumb,
-													ext = :ext,
-													mime = :mime' );
-
-												$sth->bindParam( ':name', $photo['name'], PDO::PARAM_STR );
-												$sth->bindParam( ':description', $photo['description'], PDO::PARAM_STR );
-												$sth->bindParam( ':file', $photo['file'], PDO::PARAM_STR );
-												$sth->bindParam( ':thumb', $photo['thumb'], PDO::PARAM_STR );
-												$sth->bindParam( ':ext', $photo['ext'], PDO::PARAM_STR );
-												$sth->bindParam( ':mime', $photo['mime'], PDO::PARAM_STR );
-												$sth->execute( );
-												$sth->closeCursor( );
-												++$count;
-											}
+                                            $sth->bindParam( ':name', $photo['name'], PDO::PARAM_STR );
+                                            $sth->bindParam( ':description', $photo['description'], PDO::PARAM_STR );
+                                            $sth->bindParam( ':file', $photo['file'], PDO::PARAM_STR );
+                                            $sth->bindParam( ':thumb', $photo['thumb'], PDO::PARAM_STR );
+                                            $sth->bindParam( ':ext', $photo['ext'], PDO::PARAM_STR );
+                                            $sth->bindParam( ':mime', $photo['mime'], PDO::PARAM_STR );
+                                            $sth->execute( );
+                                            $sth->closeCursor( );
+                                            ++$count;
 										}
 										else
 										{
