@@ -65,15 +65,15 @@ if( empty( $fileName ) or empty( $fileExt ) )
 }
 
 // Kiem tra file ton tai
-$fileName2 = $fileName;
-$i = 1;
-while( file_exists( NV_ROOTDIR . '/' . NV_TEMP_DIR . '/' . $fileName2 ) )
-{
-	$fileName2 = preg_replace( '/(.*)(\.[a-zA-Z0-9]+)$/', '\1-' . $i . '\2', $fileName );
-	++$i;
-}
-$fileName = $fileName2;
-$filePath = NV_ROOTDIR . '/' . NV_TEMP_DIR . '/' . $fileName;
+// $fileName2 = $fileName;
+// $i = 1;
+// while( file_exists( NV_ROOTDIR . '/' . NV_UPLOADS_DIR . '/' . $module_file . '/tmp/' . $fileName2 ) )
+// {
+    // ++$i;
+	// $fileName2 = preg_replace( '/(.*)(\.[a-zA-Z0-9]+)$/', '\1-' . $i . '\2', $fileName );
+// }
+// $fileName = $fileName2;
+$filePath = NV_ROOTDIR . '/' . NV_UPLOADS_DIR . '/' . $module_file . '/tmp/' . $fileName;
 
 // Open temp file
 if( !$out = @fopen( "{$filePath}.part", $chunks ? "ab" : "wb" ) )
@@ -139,7 +139,7 @@ if( !$chunks || $chunk == $chunks - 1 )
 
 //$image_info = nv_is_image( $filePath );
 
-$thumb = NV_BASE_SITEURL . 'themes/admin_default/modules/' . $module_file . '/mp3.svg';
+$thumb = NV_BASE_SITEURL . 'themes/admin_default/modules/' . $module_file . '/' . $fileExt . '.svg';
 
 $image_url = NV_BASE_SITEURL . str_replace( NV_ROOTDIR . '/', '', $filePath );
 $token_image = md5( $global_config['sitekey'] . session_id( ) . $image_url );

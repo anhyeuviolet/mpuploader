@@ -77,14 +77,13 @@
 							<tr id="group_{LOOP.album_id}">
 								<td class="text-left"><input type="checkbox" name="selected[]" value="{LOOP.album_id}"></td>
 								<td class="text-left">
-								<strong>{LOOP.name}</strong>
+								<a href="{LOOP.link}"> <strong>{LOOP.name}</strong></a>
 								</td>
 								<td class="text-center">
 								{LOOP.author_upload}
 								</td>
 								<td class="text-center">
-									 <a href="{LOOP.category_link}">{LOOP.category}</a>
-									 <a href="{LOOP.category_link_out}" target="_blank"><i class="fa fa-external-link"></i></a> 
+                                    {LOOP.category}
 								</td>
 								<td align="center">
 									{LOOP.num_photo}

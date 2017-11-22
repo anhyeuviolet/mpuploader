@@ -106,22 +106,26 @@ $sql_create_module[] = "CREATE TABLE " . $db_config['prefix'] . "_" . $lang . "_
 ) ENGINE=MyISAM";
 
 $sql_create_module[] = "CREATE TABLE " . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_rows (
-  row_id mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  album_id mediumint(8) unsigned NOT NULL DEFAULT '0',
-  name varchar(250) NOT NULL DEFAULT '',
-  description varchar(250) NOT NULL DEFAULT '',
-  size int(11) unsigned NOT NULL DEFAULT '0',
-  width mediumint(8) unsigned NOT NULL DEFAULT '0',
-  height mediumint(8) unsigned NOT NULL DEFAULT '0',
-  mime varchar(100) NOT NULL DEFAULT '',
-  file varchar(250) NOT NULL,
-  thumb varchar(250) NOT NULL,
-  favorite int(11) NOT NULL DEFAULT '0',
-  status tinyint(1) NOT NULL DEFAULT '1',
-  viewed mediumint(8) unsigned NOT NULL default '0',
-  date_added int(11) unsigned NOT NULL DEFAULT '0',
-  date_modified int(11) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (row_id)
+    row_id mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+    album_id mediumint(8) unsigned NOT NULL DEFAULT '0',
+    name varchar(250) NOT NULL DEFAULT '',
+    description varchar(250) NOT NULL DEFAULT '',
+    size int(11) unsigned NOT NULL DEFAULT '0',
+    width mediumint(8) unsigned NOT NULL DEFAULT '0',
+    height mediumint(8) unsigned NOT NULL DEFAULT '0',
+    mime varchar(100) NOT NULL DEFAULT '',
+    ext varchar(100) NOT NULL DEFAULT '',
+    file varchar(250) NOT NULL,
+    thumb varchar(250) NOT NULL,
+    favorite int(11) NOT NULL DEFAULT '0',
+    status tinyint(1) NOT NULL DEFAULT '1',
+    viewed mediumint(8) unsigned NOT NULL default '0',
+    date_added int(11) unsigned NOT NULL DEFAULT '0',
+    date_modified int(11) unsigned NOT NULL DEFAULT '0',
+    PRIMARY KEY (row_id),
+    KEY (ext),
+    KEY (file),
+    UNIQUE (file)
 ) ENGINE=MyISAM";
 
 // Module sidplay setting

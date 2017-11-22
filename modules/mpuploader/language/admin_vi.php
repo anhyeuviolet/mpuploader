@@ -34,7 +34,7 @@ $lang_module['general'] = 'Thông tin chung';
 $lang_module['create_alias'] = 'Tạo liên kết tĩnh';
 $lang_module['delete_sign'] = 'Xóa bỏ dấu, kí tự đặc biệt';
 $lang_module['please_select_one'] = 'Hãy chọn một dòng để thực hiện';
-$lang_module['check_form'] = 'Bạn hãy kiểm tra các tab, trường dữ liệu gây ra lỗi';
+$lang_module['check_form'] = 'Bạn hãy kiểm tra cá tab, trường dữ liệu gây ra lỗi';
 $lang_module['confirm'] = 'Lỗi: Nếu thực hiện thao tác này bạn sẽ không thể phục hồi lại dữ liệu. Bạn có chắc chắc muốn xoá ?';
 $lang_module['require_category'] = 'Vui lòng tạo chuyên mục trước';
 

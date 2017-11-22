@@ -14,7 +14,7 @@ if( !defined( 'NV_MAINFILE' ) )
 
 $module_version = array(
 	'name' => 'MP Uploader',
-	'modfuncs' => 'main, viewcat, detail_album, detail, detail_viewer, search, upload',
+	'modfuncs' => 'upload',
 	'submenu' => 'rss,search',
 	'is_sysmod' => 0,
 	'virtual' => 1,
@@ -23,9 +23,9 @@ $module_version = array(
 	'author' => 'KENNY NGUYEN (nguyentiendat713@gmail.com)',
 	'uploads_dir' => array(
 		$module_upload,
-		$module_upload . '/images',
+		$module_upload . '/files',
 		$module_upload . '/thumbs',
-		$module_upload . '/temp'
+		$module_upload . '/tmp'
 	),
 	'note' => ''
 );

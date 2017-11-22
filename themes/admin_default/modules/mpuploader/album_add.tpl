@@ -1,6 +1,5 @@
 <!-- BEGIN: main -->
 <link type="text/css" href="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
-<link rel="stylesheet" type="text/css" href="{NV_BASE_SITEURL}themes/default/modules/{MODULE_FILE}/plugins/shadowbox/shadowbox.css" />
 <div id="content">
     <!-- BEGIN: error_warning -->
     <div class="alert alert-danger">
@@ -85,100 +84,6 @@
 								<!-- BEGIN: error_category--><div class="text-danger">{error_category}</div><!-- END: error_category -->
 							</div>
 						</div>
-						
-						<div class="form-group">
-							 <label class="col-sm-4 control-label" for="input-description">{LANG.album_description} </label>
-							<div class="col-sm-20">{edit_description}</div>
-						 </div>
-						 <div class="form-group">
-								<label class="col-sm-4 control-label" for="input-meta-title">{LANG.album_meta_title}</label>
-								<div class="col-sm-20">
-									<input type="text" name="meta_title" value="{DATA.meta_title}" placeholder="{LANG.album_meta_title}" id="input-meta-title" class="form-control" />
-								</div>
-						 </div>
-						<div class="form-group">
-							<label class="col-sm-4 control-label" for="input-meta-description">{LANG.album_meta_description}</label>
-							<div class="col-sm-20">
-								<textarea name="meta_description" rows="2" placeholder="{LANG.album_meta_description}" id="input-meta-description" class="form-control">{DATA.meta_description}</textarea>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-4 control-label" for="input-meta-keyword">{LANG.album_meta_keyword}</label>
-							<div class="col-sm-20">
-								<textarea name="meta_keyword" rows="2" placeholder="{LANG.album_meta_keyword}" id="input-meta-keyword" class="form-control">{DATA.meta_keyword}</textarea>
-							</div>
-						</div>
-						<div class="form-group">
-								<label class="col-sm-4 control-label" for="input-model">{LANG.album_model}</label>
-								<div class="col-sm-20">
-									<input type="text" name="model" value="{DATA.model}" placeholder="{LANG.album_model}" id="input-model" class="form-control" />
- 								</div>
-						</div>
-						<div class="form-group">
-								<label class="col-sm-4 control-label" for="input-date-album">{LANG.album_capturedate}</label>
-								<div class="col-sm-20">
-									<input type="text" name="capturedate" value="{DATA.capturedate}" placeholder="{LANG.album_capturedate}" id="input-date-album" class="form-control" maxlength="10"/>
- 								</div>
-						</div>
-						<div class="form-group">
-								<label class="col-sm-4 control-label" for="input-capturelocal">{LANG.album_capturelocal}</label>
-								<div class="col-sm-20">
-									<input type="text" name="capturelocal" value="{DATA.capturelocal}" placeholder="{LANG.album_capturelocal}" id="input-capturelocal" class="form-control" />
- 								</div>
-						</div>
-						
-						<div class="form-group">
-							<label class="col-sm-4 control-label" for="input-parent">{LANG.album_layout}</label>
-							<div class="col-sm-20">
-								<select class="form-control" name="layout">
-									<option value="">{LANG.defaults}</option>
-									<!-- BEGIN: layout -->
-									<option value="{LAYOUT.key}" {LAYOUT.selected}>{LAYOUT.key}</option>
-									<!-- END: layout -->
-								</select>
-							</div>
-						</div>
-						
-						<div class="form-group">
-							<label class="col-sm-4 control-label" for="input-keyword"> {GLANG.groups_view}</label>
-							<div class="col-sm-20">
-								<!-- BEGIN: groups_view -->
-								<label><input name="groups_view[]" type="checkbox" value="{GROUPS_VIEW.value}" {GROUPS_VIEW.checked} />{GROUPS_VIEW.title}</label>
-								<!-- END: groups_view -->
-							</div>
-						</div>	 
-									 
-						<div class="form-group">
-							<label class="col-sm-4 control-label" for="input-keyword"> {LANG.album_allow_comment}</label>
-							<div class="col-sm-20">
-								<!-- BEGIN: allow_comment -->
-								<label><input name="allow_comment[]" type="checkbox" value="{ALLOW_COMMENT.value}" {ALLOW_COMMENT.checked} />{ALLOW_COMMENT.title}</label>
-								<!-- END: allow_comment -->
-							</div>
-						</div>	 
-									 
-						<div class="form-group">
-							<label class="col-sm-4 control-label" for="input-status">{LANG.album_allow_rating}</label>
-							<div class="col-sm-20">
-								<select name="allow_rating" id="input-allow_rating" class="form-control">
-									<!-- BEGIN: allow_rating -->
-									<option value="{RATING.key}" {RATING.selected}>{RATING.name}</option>
-									<!-- END: allow_rating -->
-								</select>
-							</div>
-						</div>
-						
-						<div class="form-group">
-							<label class="col-sm-4 control-label" for="input-status">{LANG.album_show_status}</label>
-							<div class="col-sm-20">
-								<select name="status" id="input-status" class="form-control">
-									<!-- BEGIN: status -->
-									<option value="{STATUS.key}" {STATUS.selected}>{STATUS.name}</option>
-									<!-- END: status -->
-								</select>
-							</div>
-						</div>
-						
 					</div>
 				
 					<div class="tab-pane" id="tab-image">
@@ -227,8 +132,15 @@
 											mime_types: [{
 												title: "Image files",
 												extensions: "jpg,gif,png,jpeg"
-											},{ title : "Zip files", extensions : "zip" },
-                                            { title : "MP3 files", extensions : "mp3" }]
+											},
+                                            { 
+                                                title : "Document files", 
+                                                extensions : "zip,pdf" 
+                                            },
+                                            { 
+                                                title : "Media files", 
+                                                extensions : "mp3,mp4" 
+                                            }]
 										},
 										flash_swf_url: '{NV_BASE_SITEURL}themes/admin_default/modules/{MODULE_FILE}/plupload/Moxie.swf',
 										silverlight_xap_url: '{NV_BASE_SITEURL}themes/admin_default/modules/{MODULE_FILE}/plupload/Moxie.xap',
@@ -242,7 +154,6 @@
 												//$('.plupload_filelist_footer .plupload_file_name').append('<a href="javascript:void(0);" class="plupload_button plupload_submit nextstep">{LANG.album_next_step}</a>'); 
 												$(".plupload_button").css("display", "inline");
 												$(".plupload_upload_status").css("display", "inline");
-												Shadowbox.init({ skipSetup: true }); Shadowbox.setup(); 
 												 
  											}
 										}
@@ -259,7 +170,7 @@
 										
  										var content = $.parseJSON(response.response).data;
 										var item='';		  
-										item+='<div id="images-'+ i +'" class="col-sm-12 col-md-6">';
+										item+='<div id="images-'+ i +'" class="col-sm-24 col-md-24">';
 										item+='<div class="table-responsive row">';
 										item+='	<table class="table table-striped table-bordered table-hover">';
 										item+='		<tbody>';
@@ -270,7 +181,8 @@
 										item+='					<input type="hidden" name="albums['+ i +'][filePath]" value="'+ content['filePath'] +'">';
 										item+='					<input type="hidden" name="albums['+ i +'][image_url]" value="'+ content['image_url'] +'">';
 										item+='					<input type="hidden" name="albums['+ i +'][thumb]" value="'+ content['thumb'] +'">';
-										item+='					<a href="'+ content['image_url'] +'" rel="shadowbox[miss]" class="glt-upload2-thumb">';
+										item+='					<input type="hidden" name="albums['+ i +'][ext]" value="'+ content['ext'] +'">';
+										item+='					<a href="'+ content['image_url'] +'" class="glt-upload2-thumb">';
 										item+='						<span><img src="'+ content['thumb'] +'" width="90"></span>'; 
 										item+='					</a>';
 										item+='				</td>';
@@ -280,7 +192,7 @@
 										item+='						<i class="fa fa-trash-o fa-lg fixtrash"></i>';
 										item+='					</label>';
 										item+='					<input type="text" name="albums['+ i +'][name]" value="' + content['basename'] + '" class="form-control" placeholder="{LANG.photo_name}">';
-										item+='					<input type="text" name="albums['+ i +'][description]" value="" class="form-control" placeholder="{LANG.photo_description}">';
+										item+='					<input type="text" value="Nhấn lưu lại để có URL hoàn chỉnh." class="form-control" placeholder="Nhấn lưu lại để có URL hoàn chỉnh." readonly="readonly">';
 										item+='				</td>';
 										item+='			</tr>';
 										item+='		</tbody>';
@@ -348,7 +260,8 @@
 														<input type="hidden" name="albums[{PHOTO.key}][filePath]" value="{PHOTO.filePath}">
 														<input type="hidden" name="albums[{PHOTO.key}][image_url]" value="{PHOTO.image_url}">
 														<input type="hidden" name="albums[{PHOTO.key}][thumb]" value="{PHOTO.thumb}">
-                                                        <span><img src="{PHOTO.thumb}" width="90"></span>
+														<input type="hidden" name="albums[{PHOTO.key}][ext]" value="{PHOTO.ext}">
+														<a href="{PHOTO.image_url}" class="glt-upload2-thumb"> <span><img src="{PHOTO.thumb}" width="90"></span> </a>
 													</td>
 													<td class="col-md-10 control">
 														<label class="labelradio fr deleterows" data-toggle="tooltip" title="{LANG.delete}" data-row="{PHOTO.row_id}" data-token="{PHOTO.token}" data-token-image="{PHOTO.token_image}" data-token-thumb="{PHOTO.token_thumb}" data-key="{PHOTO.key}" >
@@ -356,7 +269,7 @@
 															<i class="fa fa-trash-o fa-lg fixtrash"></i>
 														</label>	
 														<input type="text" name="albums[{PHOTO.key}][name]" value="{PHOTO.name}" class="form-control" placeholder="{LANG.photo_name}">
-														<input type="text" name="albums[{PHOTO.key}][description]" value="{PHOTO.description}" class="form-control" placeholder="{LANG.photo_description}"> </td>
+														<input type="text" name="albums[{PHOTO.key}][image_url]" value="{PHOTO.image_url}" class="form-control" readonly="readonly"> </td>
 												</tr>
 											</tbody>
 										</table>
@@ -381,8 +294,6 @@
 </div>
 <script type="text/javascript" src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/jquery-ui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/language/jquery.ui.datepicker-{NV_LANG_INTERFACE}.js"></script>
-<script type="text/javascript" src="{NV_BASE_SITEURL}themes/default/modules/{MODULE_FILE}/plugins/shadowbox/shadowbox.js"></script>
-<script type="text/javascript">Shadowbox.init();</script>
 
 <script type="text/javascript">
 var album_error_name = '{LANG.album_error_name}';

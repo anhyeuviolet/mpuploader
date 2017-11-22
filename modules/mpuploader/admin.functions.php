@@ -18,6 +18,7 @@ $allow_func = array(
 	'alias',
 	'album',
 	'view',
+	'viewalbum',
 	'setting'
 );
 
