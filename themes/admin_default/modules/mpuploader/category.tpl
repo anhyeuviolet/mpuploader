@@ -33,12 +33,8 @@
 					<table class="table table-bordered table-hover">
 						<thead>
 							<tr>
-								<td class="col-md-2 text-center" style="width:80px" ><strong><a href="{URL_WEIGHT}">{LANG.weight}</a></strong></td>
-								<td class="col-md-8 text-left"><strong><a href="{URL_NAME}">{LANG.category_name}</a></strong></td>
-								<td class="col-md-2 text-center"> <strong>{LANG.category_inhome} </strong></td>
-								<td class="col-md-2 text-center"> <strong>{LANG.category_status} </strong></td>
-								<td class="col-md-5 text-center"> <strong>{LANG.category_viewcat} </strong></td>
-								<td class="col-md-2 text-center"> <strong>{LANG.category_numlinks} </strong></td>
+								<td class="col-md-2 text-center"><strong><a href="{URL_WEIGHT}">{LANG.weight}</a></strong></td>
+								<td class="col-md-18 text-left"><strong><a href="{URL_NAME}">{LANG.category_name}</a></strong></td>
 								<td class="col-md-3 text-center"> <strong>{LANG.action} </strong></td>
 							</tr>
 						</thead>
@@ -53,36 +49,7 @@
 									</select>
 								</td>
 								<td class="text-left"><a href="{LOOP.link}"> <strong>{LOOP.name}</strong> </a> {LOOP.numsubcat}</td>
-								<td class="text-center">
-									<select class="form-control" id="id_inhome_{LOOP.category_id}" onchange="nv_change_category('{LOOP.category_id}','inhome');">
-										<!-- BEGIN: inhome -->
-										<option value="{INHOME.value}"{INHOME.selected}>{INHOME.title}</option>
-										<!-- END: inhome -->
-									</select>
-								</td>
 								
-								<td class="text-center">
-									<select class="form-control" id="id_status_{LOOP.category_id}" onchange="nv_change_category('{LOOP.category_id}','status');">
-										<!-- BEGIN: status -->
-										<option value="{STATUS.value}"{STATUS.selected}>{STATUS.title}</option>
-										<!-- END: status -->
-									</select>
-								</td>
-								
-								<td>
-									<select class="form-control" id="id_viewcat_{LOOP.category_id}" onchange="nv_change_category('{LOOP.category_id}','viewcat');">
-										<!-- BEGIN: viewcat -->
-										<option value="{VIEWCAT.key}"{VIEWCAT.selected}>{VIEWCAT.title}</option>
-										<!-- END: viewcat -->
-									</select>
-								</td>
-								<td class="text-center">
-										<select class="form-control" id="id_numlinks_{LOOP.category_id}" onchange="nv_change_category('{LOOP.category_id}','numlinks');">
-											<!-- BEGIN: numlinks -->
-											<option value="{NUMLINKS.key}"{NUMLINKS.selected}>{NUMLINKS.title}</option>
-											<!-- END: numlinks -->
-										</select>
-								</td>
 								<td class="text-center">
 									<a href="{LOOP.edit}" data-toggle="tooltip" title="{LANG.edit}" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
 									&nbsp;&nbsp;

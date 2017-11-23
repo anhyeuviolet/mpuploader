@@ -176,6 +176,54 @@ $('body').on('click', '.deleterows', function(e) {
 });
 
 
+$('body').on('click', '.deleterows_album', function(e) {	
+	
+	var row_id = $(this).attr('data-row');
+	var album_id = $(this).attr('data-album_id');
+	var token = $(this).attr('data-token');
+	var token_image = $(this).attr('data-token-image');
+	var token_thumb = $(this).attr('data-token-thumb');
+	var key = $(this).attr('data-key');
+	var thumb = $('input[name="albums['+ key +'][thumb]"]').val();
+	var image_url = $('input[name="albums['+ key +'][image_url]"]').val();
+	if(confirm(lang_confirm) ) {
+		$.ajax({
+			url: script_name + '?' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=main&action=deleterows&nocache=' + new Date().getTime(),
+			type: 'post',
+			dataType: 'json',
+			data: 'album_id=' + album_id + '&row_id=' + row_id + '&token=' + token + '&token_image=' + token_image + '&token_thumb=' + token_thumb + '&thumb=' + thumb + '&image_url=' + image_url,
+			beforeSend: function() {
+				$('#images-' + key + ' .deleterows .fa-spinner').css('display', 'block');
+			},	
+			complete: function() {
+				$('#images-' + key + ' .fa-spinner').css('display', 'none');
+			},
+			success: function(json) {
+				$('.alert').remove();
+				$("html, body").animate({ scrollTop: 0 }, "slow");
+				
+				if (json['error']) {
+					$('#content').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+				}
+				
+				if (json['success']) {
+					
+					$('#images-' + key).remove();
+					
+					$('#content').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+					
+					window.location.href = window.location.href;
+				}		
+				 
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	} 
+});
+
+
 $('#button-delete').on('click', function() {
 	if(confirm(lang_del_confirm)) 
 	{
@@ -347,3 +395,20 @@ function copyToClipboard(elem) {
     }
     return succeed;
 }
+
+$.fn.once = function (events, callback) {
+    return this.each(function () {
+        var myCallback = function (e) {
+            callback.call(this, e);
+            $(this).off(events, myCallback);
+        };
+        $(this).on(events, myCallback);
+    });
+};
+
+$("input").focus(function(){
+    $(this).once("click keyup", function(e){      
+        $(this).select();
+        document.execCommand("copy");
+    });
+});

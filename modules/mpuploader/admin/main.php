@@ -1053,6 +1053,7 @@ foreach( $global_photo_cat as $key => $value )
 	$xtpl->parse( 'main.filter_category' );
 
 }
+
 foreach( $array_status as $key => $name )
 {
 	$xtpl->assign( 'STATUS', array(

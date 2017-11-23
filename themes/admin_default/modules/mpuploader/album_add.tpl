@@ -182,9 +182,7 @@
 										item+='					<input type="hidden" name="albums['+ i +'][image_url]" value="'+ content['image_url'] +'">';
 										item+='					<input type="hidden" name="albums['+ i +'][thumb]" value="'+ content['thumb'] +'">';
 										item+='					<input type="hidden" name="albums['+ i +'][ext]" value="'+ content['ext'] +'">';
-										item+='					<a href="'+ content['image_url'] +'" class="glt-upload2-thumb">';
-										item+='						<span><img src="'+ content['thumb'] +'" width="90"></span>'; 
-										item+='					</a>';
+										item+='					<span><img src="'+ content['thumb'] +'" width="90"></span>'; 
 										item+='				</td>';
 										item+='				<td class="col-md-10 control">';
 										item+='					<label class="labelradio fr deleterows" data-toggle="tooltip" title="{LANG.delete}" data-row="'+ content['row_id'] +'" data-token="'+ content['token'] +'" data-token-image="'+ content['token_image'] +'" data-token-thumb="'+ content['token_thumb'] +'" data-key="'+ i +'" >';
@@ -261,7 +259,7 @@
 														<input type="hidden" name="albums[{PHOTO.key}][image_url]" value="{PHOTO.image_url}">
 														<input type="hidden" name="albums[{PHOTO.key}][thumb]" value="{PHOTO.thumb}">
 														<input type="hidden" name="albums[{PHOTO.key}][ext]" value="{PHOTO.ext}">
-														<a href="{PHOTO.image_url}" class="glt-upload2-thumb"> <span><img src="{PHOTO.thumb}" width="90"></span> </a>
+                                                        <span><img src="{PHOTO.thumb}" width="90"></span>
 													</td>
 													<td class="col-md-10 control">
 														<label class="labelradio fr deleterows" data-toggle="tooltip" title="{LANG.delete}" data-row="{PHOTO.row_id}" data-token="{PHOTO.token}" data-token-image="{PHOTO.token_image}" data-token-thumb="{PHOTO.token_thumb}" data-key="{PHOTO.key}" >
@@ -313,7 +311,7 @@ $('#input-date-album').datepicker({
 	buttonImageOnly : true
 });
 </script>
-<script type="text/javascript" src="{NV_BASE_SITEURL}themes/admin_default/js/photos_footer.js"></script>
+<script type="text/javascript" src="{NV_BASE_SITEURL}themes/admin_default/js/mpuploader_footer.js"></script>
 <!-- BEGIN: getalias -->
 <script type="text/javascript">
 $("#input-name").change(function() {

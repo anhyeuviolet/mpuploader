@@ -38,14 +38,6 @@
 					</div>
 					<div class="col-md-12">
 						<div class="form-group col-md-8">
-							<select name="filter_status" id="input-status" class="form-control">
-								<option value="">{LANG.album_status}</option>
-								<!-- BEGIN: filter_status -->
-								<option value="{STATUS.key}" {STATUS.selected}>{STATUS.name}</option>
-								<!-- END: filter_status -->
-							</select>
-						</div>
-						<div class="form-group col-md-8">
 							<input type="text" name="filter_date_added" value="{DATA.filter_date_added}" placeholder="{LANG.album_date_added}" id="input-date-album" class="form-control">
 						</div>
 						<input type="hidden" name ="checkss" value="{TOKEN}" />
@@ -67,7 +59,6 @@
 								<td class="col-md-4 text-center"><strong>{LANG.album_upload_author}</strong></td>
 								<td class="col-md-4 text-center"><a href="{URL_CATEGORY}"><strong>{LANG.album_category}</strong></a></td>
 								<td class="col-md-3 text-center"><a href="{URL_WEIGHT}"><strong>{LANG.album_num_photo}</strong></a></td>
-								<td class="col-md-3 text-center"><strong>{LANG.album_status} </strong></td>
 								<td class="col-md-3 text-center"><a href="{URL_DATE}"><strong>{LANG.album_date_added}</strong></a></td>
 								<td class="col-md-3 text-center"><strong>{LANG.action} </strong></td>
 							</tr>
@@ -75,9 +66,9 @@
 						<tbody>
 							<!-- BEGIN: loop --> 
 							<tr id="group_{LOOP.album_id}">
-								<td class="text-left"><input type="checkbox" name="selected[]" value="{LOOP.album_id}"></td>
+								<td class="text-center"><input type="checkbox" name="selected[]" value="{LOOP.album_id}"></td>
 								<td class="text-left">
-								<a href="{LOOP.link}"> <strong>{LOOP.name}</strong></a>
+                                    <a href="{LOOP.link}"> <strong>{LOOP.name}</strong></a>
 								</td>
 								<td class="text-center">
 								{LOOP.author_upload}
@@ -88,13 +79,6 @@
 								<td align="center">
 									{LOOP.num_photo}
 								</td>	
-								<td class="text-center">
-									<select class="form-control" id="id_status_{LOOP.album_id}" onchange="nv_change_album('{LOOP.album_id}','status');">
-										<!-- BEGIN: status -->
-										<option value="{STATUS.key}"{STATUS.selected}>{STATUS.name}</option>
-										<!-- END: status -->
-									</select>
-								</td>
 								<td align="center">
 									{LOOP.date_added}
 								</td>
@@ -125,7 +109,7 @@
 <script type="text/javascript" src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/jquery-ui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/language/jquery.ui.datepicker-{NV_LANG_INTERFACE}.js"></script>
 
-<script type="text/javascript" src="{NV_BASE_SITEURL}themes/admin_default/js/photos_footer.js"></script>
+<script type="text/javascript" src="{NV_BASE_SITEURL}themes/admin_default/js/mpuploader_footer.js"></script>
 <script type="text/javascript">
 var url_search = '{URL_SEARCH}';
 var lang_del_confirm = '{LANG.confirm}';
